@@ -1,0 +1,11 @@
+{
+  "name": "jardi-lib",
+  "version": "1.0.0",
+  "description": "garden data library - librairie de données sur le jardin",
+  "main": "jc.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Boly38 <boly380@gmail.com> (https://github.com/boly38/jardiLib)",
+  "license": "MIT"
+}

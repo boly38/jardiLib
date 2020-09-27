@@ -1,0 +1,10 @@
+{
+   "type": ["légume","fruit"],
+   "semi": { "m": [2,3]},
+   "plantation": { "m": [3,4,5,6]},
+   "récolte": { "m": [6,7,8,9,10], "txt": "quatre mois après le semis et jusqu’aux premières gelées. (Juillet - Octobre)"},
+   "sources": [
+     { "a": "Rustica - Réussir la culture de la tomate au potager",
+       "href":"https://www.rustica.fr/legumes-et-potager/fiche-culture-tomate,556.html"}
+   ]
+}
