@@ -15,7 +15,7 @@ class JardiConsole {
 		jardiConsole.menu();
 		jardiConsole.command();
 	});
-  };
+  }
   
   menu() {
     this._clearScreen();
@@ -27,19 +27,18 @@ class JardiConsole {
     console.info("|- q - quitter");
     console.info("|---------- ");
     console.info(this.toastMessage);
-  };
+  }
 
   command() {
     // Key input
     readline.emitKeypressEvents(process.stdin);
     process.stdin.setRawMode(true);
     process.stdin.on('keypress', (str, key) => { this.onKeyPressed(str, key) });
-  };
+  }
 
   onKeyPressed(str, key) {
       var jardiConsole = this;
-      if ((key.name == 'q')
-       || (key && key.ctrl && key.name == 'c')) {
+      if ((key.name == 'q') || (key && key.ctrl && key.name == 'c')) {
         jardiConsole.quit();
       }
 	  var keyCode = str + "/" + key.ctrl + "/" + key.name;
@@ -55,7 +54,7 @@ class JardiConsole {
 		default:
 	        console.log('commande inconnue "' + keyCode + "'");
       }
-  };
+  }
   quit() {
 	 console.info("Au revoir!");
      process.exit();
@@ -84,7 +83,7 @@ class JardiConsole {
         }
         jardiConsole.menu();
      });
-  };
+  }
 
   listMonth() {
      var jardiConsole = this;
@@ -99,13 +98,13 @@ class JardiConsole {
         }
         jardiConsole.menu();
      });
-  };
+  }
 
   //~ private
 
   _sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
-  };
+  }
     
   _clearScreen() {
     var lines = process.stdout.getWindowSize()[1];

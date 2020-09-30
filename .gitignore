@@ -1,2 +1,8 @@
 # IntelliJ
 *.iml
+
+# NodeJs
+node_modules/
+
+# secrets
+*.dontpush.*

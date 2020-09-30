@@ -1,4 +1,4 @@
-# jardiLib - BETA
+# jardiLib - ALPHA
 
 Librairie de mise à disposition de données sur le jardin
 
@@ -8,18 +8,18 @@ Librairie de mise à disposition de données sur le jardin
 L'objectif est de mettre à disposition un ensemble de données sur le jardin : semi, repicage, récolte, floraison. 
 
 - Une librairie et une classe `JardiService` permet d'interroger les données.
-- Les données sont maintenues sous la forme de fichiers plats json qui doivent rester simples à faire évoluer: 
-1 fichier == 1 élément du jardin (légume, fleur, arbre, ou autre)
-- aucun service de gestion de base de données n'est requis.
+- Les données sont maintenues sous la forme de documents json qui doivent rester simples à faire évoluer :
+  1 document == 1 élément du jardin (légume, fleur, arbre, ou autre)
 
-## Beta notice
+## ALPHA notice
 
-BETA - pour le moment, la librairie est en "beta".
- Cette librairie est susceptible d'évoluer sans préavis et sans garantie de retro-compatibilité.
+ALPHA - pour le moment, la librairie est en "alpha".
 
-# Données
+ Cette librairie est en cours de construction et va évoluer sans préavis et sans garantie de retro-compatibilité.
 
-Les données sont présentes sous le dossier `database/` et voici le format d'un fichier
+# Données exemple
+
+Des données exemple sont présentes sous le dossier [`database/`](./database) et voici le format d'un fichier
 
 ``` 
 {
@@ -44,7 +44,7 @@ Les périodes (`<semi|plantation|floraison>`) sont décrites comme suit:
 - `m` : le(s) mois concerné(s) (de `1`: janvier à `12`:décembre)
 - `txt` : texte libre, information complémentaire sur la période ou sur l'action.
 
-# Utilisation en mode console
+# Utilisation des exemples en mode console
 
 Exécutez les commandes suivantes :
 ``` 
@@ -65,3 +65,30 @@ EOF
 # c'est parti !
 node jc
 ```
+
+# Données sous mongo db - En cours de construction
+
+Plan: cf. [JardiDocs.md](JardiDocs.md)
+
+Vous pouvez créer une base mongo via certains services en ligne (ex. [cloud.mongodb.com](https://cloud.mongodb.com/)).
+
+Personnalisez votre environnement (cf. `initEnv.example.sh`).
+
+* Exemple simple
+
+``` 
+node js
+```
+
+* Exemple en mode console
+
+``` 
+node jdc
+```
+
+## Contributions
+
+Merci d'utiliser les tickets.
+
+Robots activés:
+* [houndci](https://houndci.com/)
