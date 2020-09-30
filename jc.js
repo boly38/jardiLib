@@ -1,5 +1,6 @@
+const JardiConsole =  require('./JardiConsole.js');
+
 try {
-    const JardiConsole =  require('./JardiConsole.js');
     console.info("Starting JardiConsole");
     let jardiConsole = new JardiConsole();
 } catch (exception) {
