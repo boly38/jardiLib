@@ -7,7 +7,7 @@ Librairie de mise à disposition de données sur le jardin
 
 L'objectif est de mettre à disposition un ensemble de données sur le jardin : semi, repicage, récolte, floraison. 
 
-- Une librairie et une classe `JardiService` permet d'interroger les données.
+- Une librairie et une classe `JardiFichiers` permet d'interroger les données.
 - Les données sont maintenues sous la forme de documents json qui doivent rester simples à faire évoluer :
   1 document == 1 élément du jardin (légume, fleur, arbre, ou autre)
 

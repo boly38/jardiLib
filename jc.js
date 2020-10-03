@@ -1,4 +1,4 @@
-const JardiConsole =  require('./JardiConsole.js');
+const JardiConsole =  require('./lib/JardiConsole.js');
 
 try {
     console.info("Starting JardiConsole");

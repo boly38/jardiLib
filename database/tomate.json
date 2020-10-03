@@ -1,4 +1,5 @@
 {
+   "nom": "tomate",
    "type": ["légume","fruit"],
    "semi": { "m": [2,3]},
    "plantation": { "m": [3,4,5,6]},
