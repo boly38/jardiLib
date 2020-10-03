@@ -58,5 +58,5 @@ try {
         });
     });
 } catch (exception) {
-    console.info("JardiSample Exception", exception);
+    console.info("JardiSample Exception:", exception);
 }
