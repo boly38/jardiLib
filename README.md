@@ -72,23 +72,23 @@ Plan: cf. [JardiDocs.md](JardiDocs.md)
 
 Vous pouvez créer une base mongo via certains services en ligne (ex. [cloud.mongodb.com](https://cloud.mongodb.com/)).
 
-Personnalisez votre environnement (cf. `initEnv.example.sh`).
-
-* Exemple simple
-
-``` 
-node js
+- Clonez le dépôt
+- Personnalisez votre environnement (cf. [`initEnv.example.sh`](./env/initEnv.example.sh)) :
+```
+cp ./env/initEnv.example.sh ./env/initEnv.dontpush.sh
+# vi ./env/initEnv.dontpush.sh
+. ./env/initEnv.dontpush.sh
 ```
 
-* Exemple en mode console
+- Lancez l'exemple en mode terminal-kit
 
 ``` 
-node jdc
+node jt
 ```
 
 ## Contributions
 
 Merci d'utiliser les tickets.
 
-Robots activés:
-* [houndci](https://houndci.com/)
+Robot activé:
+* [houndci](https://houndci.com/).
