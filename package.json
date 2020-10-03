@@ -10,7 +10,9 @@
   "license": "MIT",
   "dependencies": {
     "async": "^3.2.0",
-    "mongoose": "^5.10.7"
+    "await": "^0.2.6",
+    "mongoose": "^5.10.7",
+    "terminal-kit": "^1.43.0"
   },
   "jshintConfig": {
     "esversion": 6
