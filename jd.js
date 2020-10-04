@@ -6,10 +6,6 @@ class JardiSample {
     this.jd.init(cb);
   }
 
-  sample(cb) {
-    this.jd.example(cb);
-  }
-
   list(cb) {
     this.jd.listDocuments({}, (err,docs) => {
       if (err) {
@@ -20,18 +16,6 @@ class JardiSample {
       console.log("docs:", docs);
       cb();
     });
-  }
-
-  removeSample(cb) {
-    this.jd.deleteDocumentsAddOne({},  (err,docs) => {
-       if (err) {
-         console.error("removeSample error:",err);
-         cb();
-         return;
-       }
-       console.log("docs:", docs);
-       cb();
-     });
   }
 
   close() {
@@ -47,16 +31,10 @@ try {
           console.error("init error:", err);
           return;
         }
-        js.sample(() => {
-            js.list(() => {
-                js.removeSample(() => {
-                    js.list(() => {
-                        js.close();
-                    });
-                });
-            });
+        js.list(() => {
+          js.close();
         });
     });
 } catch (exception) {
-    console.info("JardiSample Exception:", exception);
+    console.info("JardiSample Exception: ", exception);
 }
