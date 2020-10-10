@@ -1,3 +1,4 @@
+[JardiLib - retour](../README.md)
 # JardiDocs - WiP -  ALPHA
 
 Cas d'utilisation
@@ -8,23 +9,28 @@ Cas d'utilisation
 - (admin) - refuser une contribution
 
 ## Gestion de la base de données
-Une base de donnée "jardi-lib" existera, 
+Une base de donnée `jardi-lib` publique existera, 
 mais cette librairie permet de gérer sa propre instance.
 
-TBD
+(A compléter)
 
-## lister les documents
+## Fonctions de la classe JardiDocs
+
+### lister les documents
 `listDocuments(options, cb) : list<document>`
 
 `options` attributs :
-- `nom`- nom exact ou regex
-- `mois` - liste de mois (1: janvier, 12:décembre), au moins un mois de cette liste doit apparaître dans les périodes du document
-- `champs` - si absent, le document entier est retourné, sinon uniquement les champs concernés sont retournés 
+- `nom`- nom exact ou regex,
+- `mois` - liste de mois (1 : janvier, 12 : décembre), au moins un mois de cette liste doit apparaître dans les périodes du document,
+- `champs` - liste de clés. Si absent, le document entier est retourné, sinon uniquement les champs concernés sont retournés.
+- `bookmark` - `_id` du dernier document de la page précédente (exclu) pour la pagination.
+- `limit` - nombre maximum d'élément à retourner (maximum : `1000`, défaut : `10`).
 
-## créer une contribution 
+### créer une contribution 
 
 `contribution(meta, <document>, cb) : <contribution>`
-document:
+
+`document` :
 ``` 
 {
   "nom": "cosmos",
@@ -46,20 +52,42 @@ les clés de premier niveau sont :
 - `sources` : tableau des sources utilisées pour le fichier concerné.
 
 pour une période les clés de premier niveau sont : 
-- m : liste des mois concernés(1: janvier, 12:décembre)
-- txt : texte libre
+- `m` : liste des mois concernés(1 : janvier, 12 :décembre),
+- `txt` : texte libre.
 
 pour une source les clés de premier niveau sont : 
-- a : label
-- href : lien web
+- `a` : label,
+- `href` : lien web.
 
-meta: ensemble de meta-data stockées avec la contribution (libre / ex. username/IP..).
+`meta` : ensemble de meta-data stockées avec la contribution (libre / ex. username/IP..).
 Le timestamp de création de la contribution sera automatiquement ajoutée aux metas sous le clé `creationTs`.
 
-## lister les contributions
+### lister les contributions
 
 `listContributions(meta, cb) : list<contribution>`
 
-TBD
+(A Compléter)
 
 
+# Accès à la base de données en mode console
+
+- Clonez le dépôt
+```
+git clone https://github.com/boly38/jardiCal.git
+```
+
+- Vous pouvez créer une base mongo via certains services en ligne (ex. [cloud.mongodb.com](https://cloud.mongodb.com/)).
+Ou bien via docker.
+
+- Personnalisez votre environnement (cf. [`initEnv.example.sh`](../env/initEnv.example.sh)) :
+```
+cp ./env/initEnv.example.sh ./env/initEnv.dontpush.sh
+# vi ./env/initEnv.dontpush.sh
+. ./env/initEnv.dontpush.sh
+```
+
+- Lancez l'exemple en mode console (+[terminal-kit](https://github.com/cronvel/terminal-kit#readme)) :
+
+``` 
+node jt
+```

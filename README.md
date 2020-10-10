@@ -2,14 +2,19 @@
 
 Librairie de mise à disposition de données sur le jardin
 
+[![License](https://img.shields.io/github/license/boly38/jardiLib.svg)](https://github.com/cronvel/terminal-kit)
+[![Downloads](https://img.shields.io/npm/dm/jardi-lib.svg)](https://www.npmjs.com/package/terminal-kit)
+[![Version](https://img.shields.io/npm/v/jardi-lib.svg)](https://www.npmjs.com/package/terminal-kit)
 
 ## Présentation
 
-L'objectif est de mettre à disposition un ensemble de données sur le jardin : semi, repicage, récolte, floraison. 
+L'objectif est de mettre à disposition un ensemble de données sur le jardin : semi, plantation, récolte, floraison. 
 
-- Une librairie et une classe `JardiFichiers` permet d'interroger les données.
+- Une librairie et des classes permettent d'interroger les données.
 - Les données sont maintenues sous la forme de documents json qui doivent rester simples à faire évoluer :
-  1 document == 1 élément du jardin (légume, fleur, arbre, ou autre)
+  1 document == 1 élément du jardin (légume, fleur, arbre, ou autre).
+- Les données sont stockées dans une base NoSQL MongoDB.
+- Un exemple existe avec une base de fichiers plats json
 
 ## ALPHA notice
 
@@ -17,78 +22,17 @@ ALPHA - pour le moment, la librairie est en "alpha".
 
  Cette librairie est en cours de construction et va évoluer sans préavis et sans garantie de retro-compatibilité.
 
-# Données exemple
+- Gérer des données fichier json : voir [JardiFichiers](docs/JardiFichiers.md)
+- Gérer des données jardi-lib MongoDB : voir [JardiDocs](docs/JardiDocs.md)
 
-Des données exemple sont présentes sous le dossier [`database/`](./database) et voici le format d'un fichier
-
-``` 
-{
-  "type": ["fleur"],
-  "semi": { "m": [3,4]},
-  "plantation": { "m": [4,5,6], "txt": "Les repiquages et les mises en place des plants s'effectuent à la mi-mai lorsque les risques de gelées sont passés."},
-  "floraison": { "m": [5, 6,7,8,9,10], "txt": "Abondantes fleurs simples, semi-doubles ou doubles du mois de mai jusqu'aux gelées."},
-  "sources": [
-    { "a": "Homejardin - Cosmos",
-      "href":"http://www.homejardin.com/cosmos/cosmos.html"}
-  ]
-}
-```
-les clés de premier niveau sont : 
-- `type` : type d'élément, avec comme valeur autorisée: `fleur`, `fruit`, `légume`, `arbre`. C'est un tableau car certaines entrées peuvent correspondre à plusieurs types.
-- `semi` : information sur la période de semi
-- `plantation` : information sur la période de plantation en pleine terre, ou repiquage
-- `floraison` : information sur la période de floraison
-- `sources` : tableau des sources utilisées pour le fichier concerné.
-
-Les périodes (`<semi|plantation|floraison>`) sont décrites comme suit:
-- `m` : le(s) mois concerné(s) (de `1`: janvier à `12`:décembre)
-- `txt` : texte libre, information complémentaire sur la période ou sur l'action.
-
-# Utilisation des exemples en mode console
-
-Exécutez les commandes suivantes :
-``` 
-# j'installe la librairie
-npm i jardi-lib
-
-# je créer un usage console
-cat <<EOF > jc.js
-const JardiConsole =  require('jardi-lib/JardiConsole.js');
-
-try {
-    new JardiConsole();
-} catch (exception) {
-    console.info("JardiConsole Exception", exception);
-}
-EOF
-
-# c'est parti !
-node jc
-```
-
-# Données sous mongo db - En cours de construction
-
-Plan: cf. [JardiDocs.md](JardiDocs.md)
-
-Vous pouvez créer une base mongo via certains services en ligne (ex. [cloud.mongodb.com](https://cloud.mongodb.com/)).
-
-- Clonez le dépôt
-- Personnalisez votre environnement (cf. [`initEnv.example.sh`](./env/initEnv.example.sh)) :
-```
-cp ./env/initEnv.example.sh ./env/initEnv.dontpush.sh
-# vi ./env/initEnv.dontpush.sh
-. ./env/initEnv.dontpush.sh
-```
-
-- Lancez l'exemple en mode terminal-kit
-
-``` 
-node jt
-```
 
 ## Contributions
 
-Merci d'utiliser les tickets.
+Merci d'utiliser les tickets, et pull-requests.
 
-Robot activé:
-* [houndci](https://houndci.com/).
+### Robot activés
+
+|      |    |   |
+|--------|-------|:--------|
+| [![Build Status](https://travis-ci.com/boly38/jardiLib.svg?branch=master)](https://travis-ci.com/boly38/jardiLib) |[Travis-ci](https://travis-ci.com/github/boly38/jardiLib)|Tests continus et publications sur npmjs.
+|  |[Houndci](https://houndci.com/)|Relecture de code JavaScript |

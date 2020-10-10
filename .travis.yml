@@ -7,3 +7,11 @@ env:
 
 services:
   - mongodb
+
+deploy:
+  provider: npm
+  email: "${NPM_DEPLOY_EMAIL}"
+  api_key: "${NPM_DEPLOY_TOKEN}"
+  on:
+    tags: true
+    branch: master
