@@ -1,0 +1,9 @@
+language: node_js
+node_js:
+  - 12
+
+env:
+  - JARDI_MONGO_URI="mongodb://127.0.0.1:27017/jardin?retryWrites=true&w=majority" JARDI_ADMIN_MONGO_DB_NAME=jardinAdmin
+
+services:
+  - mongodb
