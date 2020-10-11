@@ -12,7 +12,7 @@ jobs:
       services:
         - mongodb
       env:
-        - JARDI_MONGO_URI="mongodb://127.0.0.1:27017/jardin?retryWrites=true&w=majority" JARDI_ADMIN_MONGO_DB_NAME=jardinAdmin
+        - JARDI_TEST_MONGO_URI="mongodb://127.0.0.1:27017/jardin?retryWrites=true&w=majority" JARDI_TEST_ADMIN_MONGO_DB_NAME=jardinAdmin
       script: npm test
 
     - stage: deploy

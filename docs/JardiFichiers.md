@@ -37,17 +37,6 @@ Exécutez les commandes suivantes :
 # j'installe la librairie
 npm i jardi-lib
 
-# je créer un usage console
-cat <<EOF > jc.js
-const JardiConsole =  require('jardi-lib/JardiConsole.js');
-
-try {
-    new JardiConsole();
-} catch (exception) {
-    console.info("JardiConsole Exception", exception);
-}
-EOF
-
 # c'est parti !
-node jc
+node -e "const JardiConsole =  require('jardi-lib/lib/JardiConsole.js'); new JardiConsole();"
 ```
