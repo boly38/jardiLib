@@ -2,9 +2,9 @@
 
 Librairie de mise à disposition de données sur le jardin
 
-[![License](https://img.shields.io/github/license/boly38/jardiLib.svg)](https://github.com/cronvel/terminal-kit)
-[![Downloads](https://img.shields.io/npm/dm/jardi-lib.svg)](https://www.npmjs.com/package/terminal-kit)
-[![Version](https://img.shields.io/npm/v/jardi-lib.svg)](https://www.npmjs.com/package/terminal-kit)
+[![License](https://img.shields.io/github/license/boly38/jardiLib.svg)](https://github.com/boly38/jardiLib)
+[![Downloads](https://img.shields.io/npm/dm/jardi-lib.svg)](https://www.npmjs.com/package/jardi-lib)
+[![Version](https://img.shields.io/npm/v/jardi-lib.svg)](https://www.npmjs.com/package/jardi-lib)
 
 ## Présentation
 
@@ -32,7 +32,7 @@ Merci d'utiliser les tickets, et pull-requests.
 
 ### Robot activés
 
-|      |    |   |
+| badge  | nom   | description  |
 |--------|-------|:--------|
 | [![Build Status](https://travis-ci.com/boly38/jardiLib.svg?branch=master)](https://travis-ci.com/boly38/jardiLib) |[Travis-ci](https://travis-ci.com/github/boly38/jardiLib)|Tests continus et publications sur npmjs.
 |  |[Houndci](https://houndci.com/)|Relecture de code JavaScript |
