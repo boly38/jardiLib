@@ -1,0 +1,8 @@
+{
+  "nom": "Coreopsis",
+  "nom_scientifique": "Coreopsis lanceolata",
+  "type": ["vivace"],
+  "familles": ["Astéracées", "Composées"],
+  "semi": { "m": [3,4,5,6,7,8,9,10]},
+  "floraison": { "m": [6,7,8,9]}
+}

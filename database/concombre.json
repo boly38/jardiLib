@@ -1,0 +1,9 @@
+{
+   "nom": "Concombre",
+   "nom_scientifique": "Cucumis sativus",
+   "type": ["légume", "plante annuelle"],
+   "familles": ["Cucurbitacées"],
+   "plantation": { "m": [3,4,5]},
+   "floraison": { "m": [7,8,9]},
+   "recolte": { "m": [7,8,9,10]}
+}
