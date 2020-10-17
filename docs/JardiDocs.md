@@ -1,18 +1,22 @@
 [JardiLib - retour](../README.md)
+
 # JardiDocs - WiP -  ALPHA
 
 Cas d'utilisation
-- lister les documents (option)
-- créer une contribution (proposer un nouveau document ou mise à jour d'un document existant)
-- lister les contributions
-- (admin) - accepter une contribution
-- (admin) - refuser une contribution
+
+| role  | fonctionnalité   | commentaire  |
+|--------|-------|:--------|
+| utilisateur|lister les documents (option)
+| admin |créer une contribution|proposer un nouveau document ou mise à jour d'un document existant
+| admin |lister les contributions
+| propriétaire |refuser les contributions
+| propriétaire |accepter les contributions
+
 
 ## Gestion de la base de données
-Une base de donnée `jardi-lib` publique existera, 
-mais cette librairie permet de gérer sa propre instance.
+Une base de donnée `jardi-lib` existe, mais cette librairie permet de gérer sa propre instance.
 
-(A compléter)
+L'accès à la base se fait en fonction de l'environnement: cf. §"Accès à la base de données"
 
 ## Fonctions de la classe JardiDocs
 
@@ -30,37 +34,9 @@ mais cette librairie permet de gérer sa propre instance.
 
 `contribution(meta, <document>, cb) : <contribution>`
 
-`document` :
-``` 
-{
-  "nom": "cosmos",
-  "type": ["fleur"],
-  "semi": { "m": [3,4]},
-  "plantation": { "m": [4,5,6], "txt": "Les repiquages et les mises en place des plants s'effectuent à la mi-mai lorsque les risques de gelées sont passés."},
-  "floraison": { "m": [5, 6,7,8,9,10], "txt": "Abondantes fleurs simples, semi-doubles ou doubles du mois de mai jusqu'aux gelées."},
-  "sources": [
-    { "a": "Homejardin - Cosmos",
-      "href":"http://www.homejardin.com/cosmos/cosmos.html"}
-  ]
-}
-```
-les clés de premier niveau sont : 
-- `type` : type d'élément, avec comme valeurs autorisées : `fleur`, `fruit`, `légume`, `arbre`. C'est un tableau car certaines entrées peuvent correspondre à plusieurs types.
-- `semi` : information sur la période de semi
-- `plantation` : information sur la période de plantation en pleine terre, ou repiquage
-- `floraison` : information sur la période de floraison
-- `sources` : tableau des sources utilisées pour le fichier concerné.
+- `document`, `contribution` : cf. [modèle](Modèle.md)
 
-pour une période les clés de premier niveau sont : 
-- `m` : liste des mois concernés(1 : janvier, 12 :décembre),
-- `txt` : texte libre.
 
-pour une source les clés de premier niveau sont : 
-- `a` : label,
-- `href` : lien web.
-
-`meta` : ensemble de meta-data stockées avec la contribution (libre / ex. username/IP..).
-Le timestamp de création de la contribution sera automatiquement ajoutée aux metas sous le clé `creationTs`.
 
 ### lister les contributions
 

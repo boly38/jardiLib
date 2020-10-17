@@ -1,0 +1,9 @@
+{
+  "nom": "Tournesol soleil",
+  "nom_scientifique": "Helianthus annuus",
+  "type": ["plantes herbacées","plante annuelle","fleur"],
+  "familles": ["Astéracées","Composées"],
+  "semi": { "m": [3,4,5,6]},
+  "plantation": { "m": [3,4,5,6]},
+  "floraison": { "m": [6,7,8,9]}
+}

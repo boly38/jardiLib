@@ -41,6 +41,8 @@
   "dependencies": {
     "async": "^3.2.0",
     "await": "^0.2.6",
+    "chai": "^4.2.0",
+    "flatten": "^1.0.3",
     "mongoose": "^5.10.7",
     "terminal-kit": "^1.43.0"
   },

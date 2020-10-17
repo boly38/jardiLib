@@ -1,0 +1,9 @@
+{
+  "nom": "Cosmos",
+  "nom_scientifique": "Cosmos bipinnatus",
+  "type": ["fleur annuelle", "vivace"],
+  "familles": ["Astéracées", "Composées"],
+  "semi": { "m": [3,4,5]},
+  "plantation": { "m": [4,5,6] },
+  "floraison": { "m": [7,8,9,10] }
+}
