@@ -13,7 +13,7 @@ jobs:
         - mongodb
       env:
         - JARDI_TEST_MONGO_URI="mongodb://127.0.0.1:27017/test-jardin?retryWrites=true&w=majority" JARDI_TEST_ADMIN_MONGO_DB_NAME=test-jardinAdmin
-      script: npm test
+      script: npm run cover
 
     - stage: deploy
       if: (tag =~ ^v)
