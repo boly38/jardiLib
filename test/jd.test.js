@@ -21,6 +21,17 @@ describe("JardiDocs", function() {
       jd = new JardiDocs(testDbUri, testAdminDbUri);
     });
 
+    it("should require db uri", async function() {
+        try {
+          new JardiDocs(null, null);
+          should.fail("expect InputValidationError");
+        } catch (err) {
+           // DEBUG // console.info(JSON.stringify(err));
+          expect(err.name).to.eql('ConfigurationIsMissingError');
+          expect(err.data.configuration).to.eql('URI de la base de données');
+        }
+    });
+
     it("should init", async function() {
         await TestHelper.asPromise(jd, jd.init);
         await jd.JardiDoc.deleteMany({});
@@ -50,13 +61,21 @@ describe("JardiDocs", function() {
         // DEBUG // console.info("add results=",upsertsResults);
     });
 
+    it("should not listDocuments with wrong options", function() {
+        jd.listDocuments({"limit":1090}, (err, docs) => {
+            expect(docs).to.be.an('undefined');
+             // DEBUG // console.info(JSON.stringify(err));
+            expect(err.name).to.eql('InputValidationError');
+            expect(err.data.field).to.eql('options');
+        });
+    });
+
     it("should count and listDocuments", async function() {
         // count
         assert.equal(await TestHelper.asPromise(jd, jd.count), 10);
 
         // list
-        var documents = await TestHelper.asPromise(jd, jd.listDocuments, {})
-           .catch((err) =>  console.error("err",err));
+        var documents = await TestHelper.asPromise(jd, jd.listDocuments, {}).catch((err) => { throw err});
         var cosmosEntry = documents.filter(d => d.nom == 'Cosmos')[0];
         _expectDocEntry(cosmosEntry, 'nom', 'Cosmos');
         _expectDocEntry(cosmosEntry, 'nom_scientifique','Cosmos bipinnatus');
@@ -65,6 +84,16 @@ describe("JardiDocs", function() {
         _expectDocEntryPeriod(cosmosEntry, 'semi', [3,4,5]);
         _expectDocEntryPeriod(cosmosEntry, 'plantation', [4,5,6]);
         _expectDocEntryPeriod(cosmosEntry, 'floraison', [7,8,9,10]);
+    });
+
+
+    it("should not listContribs with wrong options", function() {
+        jd.listContribs({"nom":"^$"}, (err, docs) => {
+            expect(docs).to.be.an('undefined');
+             // DEBUG // console.info(JSON.stringify(err));
+            expect(err.name).to.eql('InputValidationError');
+            expect(err.data.field).to.eql('options');
+        });
     });
 
     it("should contribute, accept, count and listDocuments", async function() {
@@ -93,8 +122,7 @@ describe("JardiDocs", function() {
 
         assert.equal(await TestHelper.asPromise(jd, jd.count), 10);
         assert.equal(await TestHelper.asPromise(jd, jd.contribsCount), 0);
-        var documents = await TestHelper.asPromise(jd, jd.listDocuments, {})
-           .catch((err) =>  console.error("err",err));
+        var documents = await TestHelper.asPromise(jd, jd.listDocuments, {}).catch((err) => { throw err});
         var cosmosEntry = documents.filter(d => d.nom_scientifique == 'Cosmos bipinnatus')[0];
         _expectDocEntry(cosmosEntry, 'nom', 'jdTestContrib');
         _expectDocEntry(cosmosEntry, 'nom_scientifique','Cosmos bipinnatus');
