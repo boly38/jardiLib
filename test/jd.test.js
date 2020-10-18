@@ -1,4 +1,5 @@
 const JardiDocs = require('../lib/JardiDocs');
+const pjson = require('../package.json');
 const assert = require('assert').strict;
 const expect = require('chai').expect
 const TestHelper =  require('./TestHelper');
@@ -36,7 +37,8 @@ describe("JardiDocs", function() {
             adminDb: {
               name:'test-jardinAdmin'
             },
-            roles:['admin','owner']
+            roles:['admin','owner'],
+            version: pjson.version
         });
     });
 
