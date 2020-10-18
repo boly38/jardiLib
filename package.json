@@ -1,6 +1,6 @@
 {
   "name": "jardi-lib",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "garden data library - librairie de données sur le jardin",
   "main": "./lib/JardiDocs.js",
   "scripts": {
