@@ -2,6 +2,7 @@ const JardiDocs = require('../lib/JardiDocs');
 const pjson = require('../package.json');
 const assert = require('assert').strict;
 const expect = require('chai').expect
+const util = require('util')
 const TestHelper =  require('./TestHelper');
 
 const testDbUri = process.env.JARDI_TEST_MONGO_URI;
@@ -34,8 +35,8 @@ describe("JardiDocs", function() {
 
     it("should init", async function() {
         await TestHelper.asPromise(jd, jd.init);
-        await jd.JardiDoc.deleteMany({});
-        await jd.JardiContrib.deleteMany({});
+        await TestHelper.asPromise(jd, jd.deleteAllDocuments);
+        await TestHelper.asPromise(jd, jd.deleteAllContribs);
     });
 
     it("should get current configuration", async function() {
@@ -55,10 +56,20 @@ describe("JardiDocs", function() {
 
     it("should add local database", async function() {
         var upsertsResults = await TestHelper.asPromise(jd, jd.addLocalDatabase)
-            .catch((err) => {
-                console.info("CATCH", err);
-            });
+            .catch((err) => { should.fail(err); });
+        expect(upsertsResults).to.eql(10);
+        assert.equal(await TestHelper.asPromise(jd, jd.count), 10);
+    });
+
+    it("should delete (and re-add local database)", async function() {
+        jd.deleteAllDocuments((err, nbDeleted) => {
+            expect(nbDeleted).to.eql(10);
+        });
+
+        var upsertsResults = await TestHelper.asPromise(jd, jd.addLocalDatabase)
+            .catch((err) => { should.fail(err); });
         // DEBUG // console.info("add results=",upsertsResults);
+        assert.equal(await TestHelper.asPromise(jd, jd.count), 10);
     });
 
     it("should not listDocuments with wrong options", function() {
@@ -86,6 +97,16 @@ describe("JardiDocs", function() {
         _expectDocEntryPeriod(cosmosEntry, 'floraison', [7,8,9,10]);
     });
 
+
+    it("should listDocuments with limit and bookmark", async function() {
+        var filter = {"limit":2};
+        var documentsFirst = await TestHelper.asPromise(jd, jd.listDocuments, filter).catch((err) => { throw err});
+        expect(documentsFirst.length).to.eql(2);
+
+        filter = {"limit":3, "bookmark":documentsFirst[1]._id};
+        var documentsSecond = await TestHelper.asPromise(jd, jd.listDocuments, filter).catch((err) => { throw err});
+        expect(documentsSecond.length).to.eql(3);
+    });
 
     it("should not listContribs with wrong options", function() {
         jd.listContribs({"nom":"^$"}, (err, docs) => {
