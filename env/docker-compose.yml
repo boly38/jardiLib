@@ -1,0 +1,19 @@
+version: '3'
+
+networks:
+  tools:
+    driver: bridge
+
+services:
+  mongo:
+    image: mongo:3.6
+    command: [--auth]
+    container_name: mongodb
+    ports:
+      - "37017:27017"
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: mypass
+    networks:
+      - tools
