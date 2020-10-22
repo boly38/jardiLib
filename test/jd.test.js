@@ -5,6 +5,8 @@ const expect = require('chai').expect
 const util = require('util')
 const TestHelper =  require('./TestHelper');
 
+const UNAVAILABLE_ERROR = 'la base de données n\'est pas disponible.';
+const UNAVAILABLE_ADMIN_ERROR = 'les fonctions d\'admin ne sont pas disponibles';
 const testDbUri = process.env.JARDI_TEST_MONGO_URI;
 const testAdminDbUri = process.env.JARDI_TEST_ADMIN_MONGO_DB_NAME;
 
@@ -37,6 +39,16 @@ describe("JardiDocs", function() {
         await TestHelper.asPromise(jd, jd.init);
         await TestHelper.asPromise(jd, jd.deleteAllDocuments);
         await TestHelper.asPromise(jd, jd.deleteAllContribs);
+    });
+
+    it("should be available", async function() {
+        var unavailableJd = new JardiDocs("osef", "osef");
+        expect(() => unavailableJd.listDocuments({},(err,doc)=>{})).to.throw(UNAVAILABLE_ERROR);
+        expect(() => unavailableJd.listContribs({},(err,doc)=>{})).to.throw(UNAVAILABLE_ADMIN_ERROR);
+        expect(() => unavailableJd.deleteAllDocuments((err,nb)=>{})).to.throw(UNAVAILABLE_ERROR);
+        expect(() => unavailableJd.deleteAllContribs((err,nb)=>{})).to.throw(UNAVAILABLE_ERROR);
+        expect(() => unavailableJd.deleteDocuments({}, (err,nb)=>{})).to.throw(UNAVAILABLE_ERROR);
+        expect(() => unavailableJd.count((err,nb)=>{})).to.throw(UNAVAILABLE_ERROR);
     });
 
     it("should get current configuration", async function() {
