@@ -7,9 +7,10 @@ const TestHelper =  require('./TestHelper');
 
 const UNAVAILABLE_ERROR = 'la base de données n\'est pas disponible.';
 const UNAVAILABLE_ADMIN_ERROR = 'les fonctions d\'admin ne sont pas disponibles';
+const testUserDbUri = process.env.JARDI_TEST_USER_MONGO_URI;
 const testDbUri = process.env.JARDI_TEST_MONGO_URI;
 const testAdminDbUri = process.env.JARDI_TEST_ADMIN_MONGO_DB_NAME;
-
+const sleep = (t) =>  ({ then: (r) => setTimeout(r, t) })
 let jd = null;
 
 function _expectDocEntry(entry, field, value) {
@@ -19,7 +20,7 @@ function _expectDocEntryPeriod(entry, field, value) {
   expect(entry[field].m, 'doc entry['+field+'].m').to.eql(value);
 }
 
-describe("JardiDocs", function() {
+describe("JardiDocs as Owner", function() {
     before(function () {
       jd = new JardiDocs(testDbUri, testAdminDbUri);
     });

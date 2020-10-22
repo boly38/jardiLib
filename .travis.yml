@@ -1,18 +1,25 @@
 language: node_js
 node_js: 12
-
+env:
+  global:
+    - JARDI_TEST_MONGO_URI="mongodb://127.0.0.1:27017/test-jardin?retryWrites=true&w=majority"
+    - JARDI_TEST_ADMIN_MONGO_DB_NAME=test-jardinAdmin
+    - JARDI_TEST_USER_MONGO_URI="mongodb://jojo:papa@127.0.0.1:27017/test-jardin?retryWrites=true&w=majority"
 stages:
   - test
   - deploy
 
 jobs:
   include:
-
     - stage: test
       services:
         - mongodb
-      env:
-        - JARDI_TEST_MONGO_URI="mongodb://127.0.0.1:27017/test-jardin?retryWrites=true&w=majority" JARDI_TEST_ADMIN_MONGO_DB_NAME=test-jardinAdmin
+      before_script:
+        # https://docs.travis-ci.com/user/database-setup/#mongodb
+        - sleep 15
+        - mongo test-jardin      --eval 'db.createUser({user:"root",pwd:"mypass",roles:["readWrite"]});'
+        - mongo test-jardinAdmin --eval 'db.createUser({user:"root",pwd:"mypass",roles:["readWrite"]});'
+        - mongo test-jardin      --eval 'db.createUser({user:"jojo",pwd:"papa",roles:["read"]});'
       script: npm run cover
 
     - stage: deploy
