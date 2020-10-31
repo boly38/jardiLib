@@ -19,3 +19,5 @@ ps: ## list docker containers and names, status, and ids
 	docker ps -a --format "table {{.Names}}\t{{.Status}}\t{{.ID}}\t{{.Ports}}"
 mongoUser: ## connect to mongo database as user
 	winpty mongo.exe localhost:37017 --username jojo --password papa --authenticationDatabase 'admin'
+mongoOwner: ## connect to mongo database as owner
+	winpty mongo.exe localhost:37017 --username root --password mypass --authenticationDatabase 'admin'
