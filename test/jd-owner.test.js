@@ -148,8 +148,10 @@ describe("JardiDocs as Owner", function() {
         // contribute
         await TestHelper.asPromise(jd, jd.contribute, testContrib);
 
-        assert.equal(await TestHelper.asPromise(jd, jd.contribsCount), 1);
-        var contribs = await TestHelper.asPromise(jd, jd.listContribs, {});
+        // list contribute by name
+        var acceptedContribByName = await TestHelper.asPromise(jd, jd.listContribs, {nom:testContrib.nom});
+        assert.equal(acceptedContribByName.length, 1);
+        assert.equal(acceptedContribByName[0].doc.nom_scientifique, testContrib.nom_scientifique);
 
         // acceptContribution
         await TestHelper.asPromise(jd, jd.acceptContribution, testContrib["nom_scientifique"]);
