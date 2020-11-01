@@ -3,18 +3,20 @@ const JardiDocs =  require('./lib/JardiDocs.js');
 class JardiSample {
   constructor(cb) {
     this.jd = new JardiDocs(process.env.JARDI_MONGO_URI);
-    this.jd.init(cb);
+    this.jd.init()
+    .then(() => cb())
+    .catch((err) => cb(err));
   }
 
   list(cb) {
-    this.jd.listDocuments({}, (err,docs) => {
-      if (err) {
-        console.error("list error:",err);
-        cb();
-        return;
-      }
+    this.jd.listDocuments({})
+    .then((docs)=> {
       console.log("docs:", docs);
-      cb();
+      cb(null, docs);
+    })
+    .catch((err) => {
+       console.error("list error:",err);
+       cb(err);
     });
   }
 

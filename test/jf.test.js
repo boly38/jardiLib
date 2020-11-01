@@ -13,18 +13,16 @@ describe("JardiFichiers", function() {
     });
 
     it("should init", async function() {
-        await TestHelper.asPromise(jf, jf.init);
+        await jf.init();
     });
 
     it("should list names", async function() {
-        var result = await TestHelper.asPromise(jf, jf.get, {"champ":"nom"})
-                                .catch((err) =>  console.error("err",err));
+        var result = await jf.get({"champ":"nom"});
         assert.equal(result.length, 10);
     });
 
     it("should list for a month", async function() {
-        var documents = await TestHelper.asPromise(jf, jf.get, {"m":[10]})
-                                .catch((err) =>  console.error("err",err));
+        var documents = await jf.get({"m":[10]});
         expect(documents.map(d => d.nom).sort())
          .to.eql(['Concombre', 'Coreopsis', 'Courgette', 'Cosmos', 'Framboisier', "Oeillets d'Inde", 'Souci', 'Tomate'].sort());
         var cosmosEntry = documents.filter(d => d.nom == 'Cosmos')[0];
