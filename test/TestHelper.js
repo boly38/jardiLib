@@ -1,3 +1,5 @@
+const expect = require('chai').expect
+
 class TestHelper {
 
     static asPromise(context, callbackFunction, ...args) {
@@ -19,6 +21,14 @@ class TestHelper {
 
     static sleep(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    static expectDocEntry(entry, field, value) {
+      expect(entry[field], 'doc entry['+field+']').to.eql(value);
+    }
+
+    static expectDocEntryPeriod(entry, field, value) {
+      expect(entry[field].m, 'doc entry['+field+'].m').to.eql(value);
     }
 
 }

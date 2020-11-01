@@ -21,7 +21,7 @@ L'accès à la base se fait en fonction de l'environnement: cf. §"Accès à la 
 ## Fonctions de la classe JardiDocs
 
 ### lister les documents
-`listDocuments(options, cb) : list<document>`
+`listDocuments(options) : Promise((list<document>),(err))`
 
 `options` attributs :
 - `nom`- nom exact ou regex,
