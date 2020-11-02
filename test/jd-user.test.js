@@ -26,14 +26,25 @@ describe("JardiDocs as User", function() {
         });
     });
 
-    it("should not listDocuments with wrong options", function() {
-        jd.listDocuments({"limit":1090})
+    it("should not listDocuments with wrong options", async function() {
+        await jd.listDocuments({"limit":1090})
         .then((docs) => {
-          should.fail("should not get here");
+          expect.fail("should not get here");
         })
         .catch((err) => {
            // DEBUG // console.info(JSON.stringify(err));
           expect(err.name).to.eql('InputValidationError');
+          expect(err.data.field).to.eql('options');
+        });
+
+        await jd.listDocuments({nom:'^10°¤90$'})
+        .then((docs) => {
+          console.info("docs", docs);
+          expect.fail("listDocuments should not success");
+        })
+        .catch((err) => {
+           // DEBUG // console.info(err);
+          expect(err.name, err).to.eql('InputValidationError');
           expect(err.data.field).to.eql('options');
         });
     });
@@ -43,7 +54,7 @@ describe("JardiDocs as User", function() {
         assert.equal(await jd.count(), 10);
 
         // list
-        var documents = await jd.listDocuments({}).catch((err) => { throw err});
+        var documents = await jd.listDocuments({}).catch((err) => {  expect.fail(err); });
         // DEBUG // console.info("documents", documents);
         var cosmosEntry = documents.filter(d => d.nom == 'jdTestContrib')[0];
         TestHelper.expectDocEntry(cosmosEntry, 'nom', 'jdTestContrib');
@@ -55,14 +66,32 @@ describe("JardiDocs as User", function() {
         TestHelper.expectDocEntryPeriod(cosmosEntry, 'floraison', [7,8,9,11]);
     });
 
+    it("should listDocuments by 'nom'", async function() {
+        var nigelleDocuments = await jd.listDocuments({nom:'Nigelle de Damas'}).catch((err) => {  expect.fail(err); });
+        TestHelper.expectDocEntry(nigelleDocuments[0], 'nom', 'Nigelle de Damas');
+
+        var nig = await jd.listDocuments({nom:'Nig'}).catch((err) => {  expect.fail(err); });
+        TestHelper.expectDocEntry(nig[0], 'nom', 'Nigelle de Damas');
+
+        var niga = await jd.listDocuments({nom:'^Nigella damascena$'}).catch((err) => {  expect.fail(err); });
+        TestHelper.expectDocEntry(niga[0], 'nom', 'Nigelle de Damas');
+
+        var nigWildcardScena = await jd.listDocuments({nom:'Nig.*scena'}).catch((err) => {  expect.fail(err); });
+        TestHelper.expectDocEntry(nigWildcardScena[0], 'nom', 'Nigelle de Damas');
+
+        var anigWildcardScena = await jd.listDocuments({nom:'aNig.*scena'}).catch((err) => {  expect.fail(err); });
+        expect(anigWildcardScena.length).to.eql(0);
+    });
+
 
     it("should listDocuments with limit and bookmark", async function() {
         var filter = {"limit":2};
-        var documentsFirst = await jd.listDocuments(filter).catch((err) => { throw err});
+        var documentsFirst = await jd.listDocuments(filter).catch((err) => {  expect.fail(err); });
         expect(documentsFirst.length).to.eql(2);
 
-        filter = {"limit":3, "bookmark":documentsFirst[1]._id};
-        var documentsSecond = await jd.listDocuments(filter).catch((err) => { throw err});
+        filter = {"limit":3, "bookmark":String(documentsFirst[1]._id)};
+        // DEBUG // console.info("filter", filter);
+        var documentsSecond = await jd.listDocuments(filter).catch((err) => {  expect.fail(err); });
         expect(documentsSecond.length).to.eql(3);
     });
 
