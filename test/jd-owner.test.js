@@ -21,7 +21,7 @@ describe("JardiDocs as Owner", function() {
     it("should require db uri", async function() {
         try {
           new JardiDocs(null, null);
-          should.fail("expect InputValidationError");
+          expect.fail("expect InputValidationError");
         } catch (err) {
            // DEBUG // console.info(JSON.stringify(err));
           expect(err.name).to.eql('ConfigurationIsMissingError');
@@ -61,27 +61,27 @@ describe("JardiDocs as Owner", function() {
     });
 
     it("should add local database", async function() {
-        var upsertsResults = await jd.addLocalDatabase().catch((err) => { should.fail(err); });
+        var upsertsResults = await jd.addLocalDatabase().catch((err) => { expect.fail(err); });
         expect(upsertsResults).to.eql(10);
         assert.equal(await jd.count(), 10);
     });
 
     it("should delete (and re-add local database)", async function() {
-        jd.deleteAllDocuments()
-        .catch((err) => { should.fail(err); })
+        await jd.deleteAllDocuments()
+        .catch((err) => { expect.fail(err); })
         .then((nbDeleted) => {
             expect(nbDeleted).to.eql(10);
         });
 
-        var upsertsResults = await jd.addLocalDatabase().catch((err) => { should.fail(err); });
+        var upsertsResults = await jd.addLocalDatabase().catch((err) => { expect.fail(err); });
         // DEBUG // console.info("add results=",upsertsResults);
         assert.equal(await jd.count(), 10);
     });
 
-    it("should not listContribs with wrong options", function() {
-        jd.listContribs({"nom":"^$"})
+    it("should not listContribs with wrong options", async function() {
+        await jd.listContribs({"nom":"^°$"})
         .then((docs) => {
-            should.fail("should not get here");
+            expect.fail("should not get here");
         })
         .catch((err) => {
              // DEBUG // console.info(JSON.stringify(err));
@@ -108,13 +108,17 @@ describe("JardiDocs as Owner", function() {
         // contribute
         await jd.contribute(testContrib);
 
+        // list contribute by regex // fully tested on jd-user listDocuments
+        var filteredContrib = await jd.listContribs({nom:'.*Contrib'}).catch((err) => {  expect.fail(err); });
+        TestHelper.expectDocEntry(filteredContrib[0].doc, 'nom', 'jdTestContrib');
+
         // list contribute by name
-        var acceptedContribByName = await jd.listContribs({nom:testContrib.nom}).catch((err) => {  should.fail(err); });
+        var acceptedContribByName = await jd.listContribs({nom:testContrib.nom}).catch((err) => {  expect.fail(err); });
         assert.equal(acceptedContribByName.length, 1);
         assert.equal(acceptedContribByName[0].doc.nom_scientifique, testContrib.nom_scientifique);
 
         // acceptContribution
-        await jd.acceptContribution(acceptedContribByName[0]._id).catch((err) => {  should.fail(err); });
+        await jd.acceptContribution(acceptedContribByName[0]._id).catch((err) => {  expect.fail(err); });
 
         assert.equal(await jd.count(), 10);
         assert.equal(await jd.contribsCount(), 0);
@@ -150,12 +154,12 @@ describe("JardiDocs as Owner", function() {
       await jd.contribute(testContrib);
 
       // list contribute by name
-      var rejectedContribByName = await jd.listContribs({nom:testContrib.nom}).catch((err) => {  should.fail(err); });
+      var rejectedContribByName = await jd.listContribs({nom:testContrib.nom}).catch((err) => {  expect.fail(err); });
       assert.equal(rejectedContribByName.length, 1);
       assert.equal(rejectedContribByName[0].doc.nom_scientifique, testContrib.nom_scientifique);
 
       // rejectContribution
-      await jd.rejectContribution(rejectedContribByName[0]._id).catch((err) => {  should.fail(err); });;
+      await jd.rejectContribution(rejectedContribByName[0]._id).catch((err) => {  expect.fail(err); });;
 
       assert.equal(await jd.count(), 10);
       assert.equal(await jd.contribsCount(), 0);
