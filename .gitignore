@@ -11,3 +11,6 @@ coverage/
 # secrets
 *.dontpush.*
 .npmrc
+
+# jardi-lib
+backup/
