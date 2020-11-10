@@ -83,7 +83,6 @@ describe("JardiDocs as User", function() {
         expect(anigWildcardScena.length).to.eql(0);
     });
 
-
     it("should listDocuments with limit and bookmark", async function() {
         var filter = {"limit":2};
         var documentsFirst = await jd.listDocuments(filter).catch((err) => {  expect.fail(err); });
@@ -93,6 +92,18 @@ describe("JardiDocs as User", function() {
         // DEBUG // console.info("filter", filter);
         var documentsSecond = await jd.listDocuments(filter).catch((err) => {  expect.fail(err); });
         expect(documentsSecond.length).to.eql(3);
+    });
+
+    it("should list types", async function() {
+        var types = await jd.listTypes().catch((err) => {  expect.fail(err); });
+        // DEBUG // console.info("types", types);
+        expect(types.length).to.eql(9);
+    });
+
+    it("should list families", async function() {
+        var families = await jd.listFamilies().catch((err) => {  expect.fail(err); });
+        // DEBUG // console.info("families", families);
+        expect(families.length).to.eql(7);
     });
 
     after(function () {
