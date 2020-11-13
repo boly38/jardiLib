@@ -88,6 +88,17 @@ describe("JardiDocs as Owner", function() {
             expect(err.name).to.eql('InputValidationError');
             expect(err.data.field).to.eql('options');
         });
+
+        await jd.listContribs({id:'^10°¤90$'})
+        .then((docs) => {
+          console.info("docs", docs);
+          expect.fail("listContribs should not success");
+        })
+        .catch((err) => {
+           // DEBUG // console.info(err);
+          expect(err.name, err).to.eql('InputValidationError');
+          expect(err.data.field).to.eql('options');
+        });
     });
 
     it("should contribute, accept, count and listDocuments", async function() {
@@ -157,6 +168,11 @@ describe("JardiDocs as Owner", function() {
       var rejectedContribByName = await jd.listContribs({nom:testContrib.nom}).catch((err) => {  expect.fail(err); });
       assert.equal(rejectedContribByName.length, 1);
       assert.equal(rejectedContribByName[0].doc.nom_scientifique, testContrib.nom_scientifique);
+
+      // list contribute by id
+      var rejectedContribById = await jd.listContribs({id:rejectedContribByName.id}).catch((err) => {  expect.fail(err); });
+      assert.equal(rejectedContribById.length, 1);
+      assert.equal(rejectedContribById[0].doc.nom_scientifique, testContrib.nom_scientifique);
 
       // rejectContribution
       await jd.rejectContribution(rejectedContribByName[0]._id).catch((err) => {  expect.fail(err); });;
