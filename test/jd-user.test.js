@@ -47,6 +47,17 @@ describe("JardiDocs as User", function() {
           expect(err.name, err).to.eql('InputValidationError');
           expect(err.data.field).to.eql('options');
         });
+
+        await jd.listDocuments({id:'^10°¤90$'})
+        .then((docs) => {
+          console.info("docs", docs);
+          expect.fail("listDocuments should not success");
+        })
+        .catch((err) => {
+           // DEBUG // console.info(err);
+          expect(err.name, err).to.eql('InputValidationError');
+          expect(err.data.field).to.eql('options');
+        });
     });
 
     it("should count and listDocuments", async function() {
@@ -66,7 +77,7 @@ describe("JardiDocs as User", function() {
         TestHelper.expectDocEntryPeriod(cosmosEntry, 'floraison', [7,8,9,11]);
     });
 
-    it("should listDocuments by 'nom'", async function() {
+    it("should listDocuments by 'nom', 'id'", async function() {
         var nigelleDocuments = await jd.listDocuments({nom:'Nigelle de Damas'}).catch((err) => {  expect.fail(err); });
         TestHelper.expectDocEntry(nigelleDocuments[0], 'nom', 'Nigelle de Damas');
 
@@ -81,6 +92,10 @@ describe("JardiDocs as User", function() {
 
         var anigWildcardScena = await jd.listDocuments({nom:'aNig.*scena'}).catch((err) => {  expect.fail(err); });
         expect(anigWildcardScena.length).to.eql(0);
+
+        var nigelleDocuments = await jd.listDocuments({id:nigelleDocuments[0].id}).catch((err) => {  expect.fail(err); });
+        TestHelper.expectDocEntry(nigelleDocuments[0], 'nom', 'Nigelle de Damas');
+
     });
 
     it("should listDocuments with limit and bookmark", async function() {
