@@ -62,7 +62,7 @@ describe("JardiDocs as User", function() {
 
     it("should count and listDocuments", async function() {
         // count
-        assert.equal(await jd.count(), 10);
+        assert.equal(await jd.count(), 9);
 
         // list
         var documents = await jd.listDocuments({}).catch((err) => {  expect.fail(err); });

@@ -101,7 +101,7 @@ describe("JardiDocs as Owner", function() {
         });
     });
 
-    it("should contribute, accept, count and listDocuments", async function() {
+    it("should contribute, accept, listDocuments, delete and count", async function() {
         var testContrib = {
             "nom": "jdTestContrib",
             "nom_scientifique": "Cosmos bipinnatus",
@@ -143,6 +143,15 @@ describe("JardiDocs as Owner", function() {
         TestHelper.expectDocEntryPeriod(cosmosEntry, 'plantation', [4,5,6]);// unchanged
         TestHelper.expectDocEntryPeriod(cosmosEntry, 'floraison', [7,8,9,11]);
         TestHelper.expectDocEntryPeriod(cosmosEntry, 'recolte', [7,8,9,10]);
+
+        var courgettes = await jd.listDocuments({'nom':'Cucurbita pepo'}).catch((err) => { throw err});
+        expect(courgettes.length).to.eql(1);
+        var nbDeleted = await jd.deleteDocuments({'id':courgettes[0].id}).catch((err) => { throw err});
+
+        courgettes = await jd.listDocuments({'nom':'Cucurbita pepo'}).catch((err) => { throw err});
+        expect(courgettes.length).to.eql(0);
+        expect(nbDeleted).to.eql(1);
+        assert.equal(await jd.count(), 9);
     });
 
 
@@ -158,7 +167,7 @@ describe("JardiDocs as Owner", function() {
           "recolte": {"m":[7,8,9,10]}
       };
 
-      assert.equal(await jd.count(), 10);
+      assert.equal(await jd.count(), 9);
       assert.equal(await jd.contribsCount(), 0);
 
       // contribute
@@ -177,7 +186,7 @@ describe("JardiDocs as Owner", function() {
       // rejectContribution
       await jd.rejectContribution(rejectedContribByName[0]._id).catch((err) => {  expect.fail(err); });;
 
-      assert.equal(await jd.count(), 10);
+      assert.equal(await jd.count(), 9);
       assert.equal(await jd.contribsCount(), 0);
     });
 
