@@ -36,3 +36,4 @@ Merci d'utiliser les tickets, et pull-requests.
 |--------|-------|:--------|
 | [![Build Status](https://travis-ci.com/boly38/jardiLib.svg?branch=master)](https://travis-ci.com/boly38/jardiLib) |[Travis-ci](https://travis-ci.com/github/boly38/jardiLib)|Tests continus et publications sur npmjs.
 |  |[Houndci](https://houndci.com/)|Relecture de code JavaScript |
+| [![Automated Release Notes by gren](https://img.shields.io/badge/%F0%9F%A4%96-release%20notes-00B2EE.svg)](https://github-tools.github.io/github-release-notes/)|[gren](https://github.com/github-tools/github-release-notes)|Création automatisée de [release notes](https://github.com/boly38/jardiLib/releases)|
