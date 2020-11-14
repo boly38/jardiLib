@@ -5,7 +5,8 @@
   "main": "./lib/JardiDocs.js",
   "scripts": {
     "test": "mocha test/*.test.js",
-    "cover": "nyc --reporter text --reporter cobertura --reporter html  --lines 66 mocha test/*.test.js"
+    "cover": "nyc --reporter text --reporter cobertura --reporter html  --lines 66 mocha test/*.test.js",
+    "release": "git checkout master&& git pull&& npm version patch&& git push origin master --tags&& . ./env/initGREN.dontpush.sh&& npx github-release-notes@0.17.1 release"
   },
   "author": "Boly38 <boly380@gmail.com>",
   "license": "MIT",
