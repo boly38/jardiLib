@@ -110,7 +110,13 @@ describe("JardiDocs as Owner", function() {
             "semi": {"m":[3,4,5]},
             // plantation
             "floraison": {"m":[7,8,9,11]},
-            "recolte": {"m":[7,8,9,10]}
+            "recolte": {"m":[7,8,9,10]},
+            "sources":[
+              {"label": "aujardin.info",
+               "href":"https://www.aujardin.info/plantes/cosmos.php"},
+              {"label": "wikipedia",
+               "href":"https://fr.wikipedia.org/wiki/Cosmos_bipinnatus"}
+            ]
         };
 
         assert.equal(await jd.count(), 10);
@@ -122,6 +128,7 @@ describe("JardiDocs as Owner", function() {
         // list contribute by regex // fully tested on jd-user listDocuments
         var filteredContrib = await jd.listContribs({nom:'.*Contrib'}).catch((err) => {  expect.fail(err); });
         TestHelper.expectDocEntry(filteredContrib[0].doc, 'nom', 'jdTestContrib');
+        // DEBUG // console.log("jdTestContrib", filteredContrib[0].doc);
 
         // list contribute by name
         var acceptedContribByName = await jd.listContribs({nom:testContrib.nom}).catch((err) => {  expect.fail(err); });
@@ -143,6 +150,14 @@ describe("JardiDocs as Owner", function() {
         TestHelper.expectDocEntryPeriod(cosmosEntry, 'plantation', [4,5,6]);// unchanged
         TestHelper.expectDocEntryPeriod(cosmosEntry, 'floraison', [7,8,9,11]);
         TestHelper.expectDocEntryPeriod(cosmosEntry, 'recolte', [7,8,9,10]);
+        expect(cosmosEntry['sources'][0]['label'], 'cosmosEntry[sources][0][label]')
+          .to.eql("aujardin.info");
+        expect(cosmosEntry['sources'][0]['href'], 'cosmosEntry[sources][0][href]')
+          .to.eql("https://www.aujardin.info/plantes/cosmos.php");
+        expect(cosmosEntry['sources'][1]['label'], 'cosmosEntry[sources][0][label]')
+          .to.eql("wikipedia");
+        expect(cosmosEntry['sources'][1]['href'], 'cosmosEntry[sources][0][href]')
+          .to.eql("https://fr.wikipedia.org/wiki/Cosmos_bipinnatus");
 
         var courgettes = await jd.listDocuments({'nom':'Cucurbita pepo'}).catch((err) => { throw err});
         expect(courgettes.length).to.eql(1);
